@@ -30,6 +30,8 @@ class PID {
    * @output The total PID error
    */
   double TotalError();
+  void UpdateParam(double cte, double tol = 0.2);
+
 
  private:
   /**
@@ -42,9 +44,13 @@ class PID {
   /**
    * PID Coefficients
    */ 
-  double Kp;
-  double Ki;
-  double Kd;
+  double K[3];
+  int next_param_id;
+  double last_cte;
+  double best_cte;
+  double dk[3] = {1, 1, 1};
+  bool better_err;
+  bool full_update;
 };
 
 #endif  // PID_H
