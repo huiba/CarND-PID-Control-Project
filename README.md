@@ -98,11 +98,30 @@ A well written README file can enhance your project and portfolio.  Develop your
 
 ## PID implementation
 
-The implementation is pretty much the same as the python implemntation as in the course under the assumtion that each time period between two event is const.
+The implementation is pretty much the same as the python implementation as in the course under the assumption that each time period between two event is const.
 
-## Parmeter tuning
+### Influence of the P. I. D. parameters on the vehicle behavior
 
-I tried the twiddle method, but it didn't work for me, I ended up with very high Kp, Ki and Kd. So I found the tuning method from https://robotics.stackexchange.com/questions/167/what-are-good-strategies-for-tuning-pid-loops, which is based on  [Ziegler-Nichols method](http://en.wikipedia.org/wiki/Ziegler%E2%80%93Nichols_method). 
+* Kp, proportional term
+
+  * influences how hard the car should be steered back to its target directly based on the difference on how far the car from the target 
+  * Large Kp will lead to stronger oscillation on the road. 
+  * Kp need to be balanced with Kd. In my case, it should be tuned as about 1/10 of Kd.
+
+* Ki, integral term
+
+  * used to reduce the systematic error.
+  * Large Ki will also lead to oscillation, but in practical, I need to set it very small. It seems we don't have much system error in our simulator.
+
+* Kd, derivative term
+
+  * used to reduce oscillation.
+  * Kd is the largest term among the three parameters.
+
+## Parameter tuning
+
+I tried the twiddle method, but it didn't work for me, I ended up with very high Kp, Ki and Kd. So I found the tuning method from https://robotics.stackexchange.com/questions/167/what-are-good-strategies-for-tuning-pid-loops, which is based on  [Ziegler-Nichols method](http://en.wikipedia.org/wiki/Ziegler%E2%80%93Nichols_method).
+
   1. Set all gains to 0.
   2. Increase Kd until the system oscillates.
   3. Reduce Kd by a factor of 2-4.
