@@ -96,3 +96,27 @@ still be compilable with cmake and make./
 ## How to write a README
 A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
 
+## PID implementation
+
+The implementation is pretty much the same as the python implemntation as in the course under the assumtion that each time period between two event is const.
+
+## Parmeter tuning
+
+I tried the twiddle method, but it didn't work for me, I ended up with very high Kp, Ki and Kd. So I found the tuning method from https://robotics.stackexchange.com/questions/167/what-are-good-strategies-for-tuning-pid-loops, which is based on  [Ziegler-Nichols method](http://en.wikipedia.org/wiki/Ziegler%E2%80%93Nichols_method). 
+  1. Set all gains to 0.
+  2. Increase Kd until the system oscillates.
+  3. Reduce Kd by a factor of 2-4.
+  4. Set Kp to about 1% of Kd.
+  5. Increase Kp until oscillations start.
+  6. Decrease Kp by a factor of 2-4.
+  7. Set Ki to about 1% of Kp.
+  8. Increase Ki until oscillations start.
+  9. Decrease Ki by a factor of 2-4.
+
+After that, I tuned slightly the parameters and end up with the final parameter: Kp = 0.1, Ki = 0.0015 and Kd = 1.2. 
+
+## Thoughts
+
+It turns out that the PID algrithm itself is easy to implement, but the parameter tuning is ideed a hard task. I don't know why the twiddle method didn't work for me. 
+
+And from project instruction, I noticed we could also use the stochastic gradient desent to tune the parameters, However, I didn't find any materials for that. Do you have something of that topic for us?
